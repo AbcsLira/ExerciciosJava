@@ -1,0 +1,136 @@
+interface Desconto {
+    double aplicarDesconto(double porcentagem);
+}
+
+
+abstract class Veiculo {
+    private String marca;
+    private String modelo;
+    private int ano;
+    private double preco;
+
+    public Veiculo(String marca, String modelo, int ano, double preco) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.preco = preco;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public abstract void exibirDetalhes();
+}
+
+
+class Carro extends Veiculo implements Desconto {
+    private int numeroPortas;
+
+    public Carro(String marca, String modelo, int ano, double preco, int numeroPortas) {
+        super(marca, modelo, ano, preco);
+        this.numeroPortas = numeroPortas;
+    }
+
+    public int getNumeroPortas() {
+        return numeroPortas;
+    }
+
+    public void setNumeroPortas(int numeroPortas) {
+        this.numeroPortas = numeroPortas;
+    }
+
+    @Override
+    public void exibirDetalhes() {
+        System.out.println("Carro:");
+        System.out.println("Marca: " + getMarca());
+        System.out.println("Modelo: " + getModelo());
+        System.out.println("Ano: " + getAno());
+        System.out.println("Preço: R$ " + getPreco());
+        System.out.println("Número de Portas: " + getNumeroPortas());
+    }
+
+    @Override
+    public double aplicarDesconto(double porcentagem) {
+        return getPreco() - (getPreco() * porcentagem / 100);
+    }
+}
+
+
+class Moto extends Veiculo implements Desconto {
+    private int cilindradas;
+
+    public Moto(String marca, String modelo, int ano, double preco, int cilindradas) {
+        super(marca, modelo, ano, preco);
+        this.cilindradas = cilindradas;
+    }
+
+    public int getCilindradas() {
+        return cilindradas;
+    }
+
+    public void setCilindradas(int cilindradas) {
+        this.cilindradas = cilindradas;
+    }
+
+    @Override
+    public void exibirDetalhes() {
+        System.out.println("Moto:");
+        System.out.println("Marca: " + getMarca());
+        System.out.println("Modelo: " + getModelo());
+        System.out.println("Ano: " + getAno());
+        System.out.println("Preço: R$ " + getPreco());
+        System.out.println("Cilindradas: " + getCilindradas());
+    }
+
+    @Override
+    public double aplicarDesconto(double porcentagem) {
+        return getPreco() - (getPreco() * porcentagem / 100);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Carro carro = new Carro("Volkswagen", "Golf", 2024, 220000, 4);
+        Moto moto = new Moto("Yamaha", "MT-09", 2024, 60000, 500);
+
+        carro.exibirDetalhes();
+        System.out.println();
+        moto.exibirDetalhes();
+
+        double descontoCarro = carro.aplicarDesconto(10);
+        double descontoMoto = moto.aplicarDesconto(15);
+
+        System.out.println("\nPreço do carro após desconto: R$ " + descontoCarro);
+        System.out.println("Preço da moto após desconto: R$ " + descontoMoto);
+    }
+}
